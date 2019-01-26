@@ -22,9 +22,8 @@
     <ClCompile Include="CG-Final\Build\ball.cpp" />
     <ClCompile Include="CG-Final\Build\cube.cpp" />
     <ClCompile Include="CG-Final\Build\cylin.cpp" />
-    <ClCompile Include="CG-Final\Build\material.cpp" />
+    <ClCompile Include="CG-Final\Build\model.cpp" />
     <ClCompile Include="CG-Final\Build\pyram.cpp" />
-    <ClCompile Include="CG-Final\Build\texture.cpp" />
     <ClCompile Include="CG-Final\main.cpp" />
     <ClCompile Include="CG-Final\Math\COLOR.cpp" />
     <ClCompile Include="CG-Final\Math\MATRIX4X4.cpp" />
@@ -32,22 +31,21 @@
     <ClCompile Include="CG-Final\Math\VECTOR2D.cpp" />
     <ClCompile Include="CG-Final\Math\VECTOR3D.cpp" />
     <ClCompile Include="CG-Final\Math\VECTOR4D.cpp" />
-    <ClCompile Include="CG-Final\Object\door.cpp" />
+    <ClCompile Include="CG-Final\Others\material.cpp" />
     <ClCompile Include="CG-Final\Others\obj3dmodel.cpp" />
     <ClCompile Include="CG-Final\Others\ParticleSystem.cpp" />
     <ClCompile Include="CG-Final\Others\PhysicsEngine.cpp" />
+    <ClCompile Include="CG-Final\Others\texture.cpp" />
     <ClCompile Include="Extensions\ARB_multitexture_extension.cpp" />
     <ClCompile Include="Extensions\EXT_texture_env_combine_extension.cpp" />
     <ClCompile Include="GLEE\GLee.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CG-Final\Build\ball.h" />
-    <ClInclude Include="CG-Final\Build\build.h" />
     <ClInclude Include="CG-Final\Build\cube.h" />
     <ClInclude Include="CG-Final\Build\cylin.h" />
-    <ClInclude Include="CG-Final\Build\material.h" />
+    <ClInclude Include="CG-Final\Build\model.h" />
     <ClInclude Include="CG-Final\Build\pyram.h" />
-    <ClInclude Include="CG-Final\Build\texture.h" />
     <ClInclude Include="CG-Final\main.h" />
     <ClInclude Include="CG-Final\Math\COLOR.h" />
     <ClInclude Include="CG-Final\Math\Maths.h" />
@@ -56,11 +54,11 @@
     <ClInclude Include="CG-Final\Math\VECTOR2D.h" />
     <ClInclude Include="CG-Final\Math\VECTOR3D.h" />
     <ClInclude Include="CG-Final\Math\VECTOR4D.h" />
-    <ClInclude Include="CG-Final\Object\door.h" />
-    <ClInclude Include="CG-Final\Object\obj.h" />
+    <ClInclude Include="CG-Final\Others\material.h" />
     <ClInclude Include="CG-Final\Others\obj3dmodel.h" />
     <ClInclude Include="CG-Final\Others\ParticleSystem.h" />
     <ClInclude Include="CG-Final\Others\PhysicsEngine.h" />
+    <ClInclude Include="CG-Final\Others\texture.h" />
     <ClInclude Include="Extensions\ARB_multitexture_extension.h" />
     <ClInclude Include="Extensions\EXT_texture_env_combine_extension.h" />
     <ClInclude Include="Extensions\glext.h" />

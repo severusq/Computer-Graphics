@@ -1,34 +1,18 @@
-//
-//  pyram.h
-//  GLUT_test
-//
-//  Created by weaveinwind on 2018/12/31.
-//  Copyright © 2018 weaveinwind. All rights reserved.
-//
+#pragma once
 
-#ifndef pyram_h
-#define pyram_h
+#include "model.h"
 
-#include "build.h"
+namespace build
+{
+	class Pyram : public Model
+	{
+	private:
+		GLfloat m_R;
+		GLfloat m_Height;
+	public:
+		Pyram(GLfloat r, GLfloat h, VECTOR3D center = VECTOR3D(0, 0, 0), VECTOR4D color = VECTOR4D(1, 1, 1, 1));
+		~Pyram();
 
-namespace wiw { namespace build {
-    class Pyram{
-    private:
-        VECTOR3D m_Bottom_center;
-        GLfloat m_Height;
-        GLfloat m_R;
-        VECTOR4D m_Color;
-    public:
-        Pyram(VECTOR3D bottom_center, GLfloat h, GLfloat r, VECTOR4D color = VECTOR4D(1, 1, 1, 1));
-        ~Pyram();
-        
-        void draw() const;
-        void onTexture(GLuint texture);
-        void offTexture();
-        void translate(VECTOR3D trans);
-        void scale(VECTOR3D scale);
-        void rotate(VECTOR4D rotate);
-    };
-}}
-
-#endif /* pyram_h */
+		void draw() const override;
+	};
+}

@@ -13,15 +13,6 @@
     <Filter Include="头文件\Model">
       <UniqueIdentifier>{1cc2865d-34bb-4e3b-b023-b867480a10d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\Object">
-      <UniqueIdentifier>{fa0433b9-6da3-4569-810c-e647e9244b6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Object">
-      <UniqueIdentifier>{dc5a8942-d79f-4050-8735-352f1b073b47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Others">
-      <UniqueIdentifier>{36cf0f12-54c3-41c2-82fa-bd3ea836df58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\Others">
       <UniqueIdentifier>{0519481e-dc64-4c15-88e5-02c914b572f6}</UniqueIdentifier>
     </Filter>
@@ -40,6 +31,9 @@
     <Filter Include="源文件\Math">
       <UniqueIdentifier>{b21a1c7a-df13-49c8-b115-0d7d3c4e7109}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Others">
+      <UniqueIdentifier>{36cf0f12-54c3-41c2-82fa-bd3ea836df58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CG-Final\main.cpp">
@@ -57,19 +51,10 @@
     <ClCompile Include="CG-Final\Build\pyram.cpp">
       <Filter>源文件\Model</Filter>
     </ClCompile>
-    <ClCompile Include="CG-Final\Object\door.cpp">
-      <Filter>源文件\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CG-Final\Build\material.cpp">
-      <Filter>源文件\Others</Filter>
-    </ClCompile>
     <ClCompile Include="CG-Final\Others\ParticleSystem.cpp">
       <Filter>源文件\Others</Filter>
     </ClCompile>
     <ClCompile Include="CG-Final\Others\PhysicsEngine.cpp">
-      <Filter>源文件\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="CG-Final\Build\texture.cpp">
       <Filter>源文件\Others</Filter>
     </ClCompile>
     <ClCompile Include="Extensions\EXT_texture_env_combine_extension.cpp">
@@ -102,15 +87,21 @@
     <ClCompile Include="CG-Final\Others\obj3dmodel.cpp">
       <Filter>源文件\Others</Filter>
     </ClCompile>
+    <ClCompile Include="CG-Final\Build\model.cpp">
+      <Filter>源文件\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="CG-Final\Others\texture.cpp">
+      <Filter>源文件\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="CG-Final\Others\material.cpp">
+      <Filter>源文件\Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CG-Final\main.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CG-Final\Build\ball.h">
-      <Filter>头文件\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Build\build.h">
       <Filter>头文件\Model</Filter>
     </ClInclude>
     <ClInclude Include="CG-Final\Build\cube.h">
@@ -121,21 +112,6 @@
     </ClInclude>
     <ClInclude Include="CG-Final\Build\pyram.h">
       <Filter>头文件\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Object\obj.h">
-      <Filter>头文件\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Others\obj3dmodel.h">
-      <Filter>头文件\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Object\door.h">
-      <Filter>头文件\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Build\texture.h">
-      <Filter>头文件\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="CG-Final\Build\material.h">
-      <Filter>头文件\Others</Filter>
     </ClInclude>
     <ClInclude Include="CG-Final\Others\ParticleSystem.h">
       <Filter>头文件\Others</Filter>
@@ -178,6 +154,18 @@
     </ClInclude>
     <ClInclude Include="CG-Final\Math\MATRIX4X4.h">
       <Filter>头文件\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CG-Final\Others\obj3dmodel.h">
+      <Filter>头文件\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="CG-Final\Build\model.h">
+      <Filter>头文件\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CG-Final\Others\material.h">
+      <Filter>头文件\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="CG-Final\Others\texture.h">
+      <Filter>头文件\Others</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

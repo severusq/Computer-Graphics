@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <time.h>
+#include <ctime>
 #include "ParticleSystem.h"
 
 float pShininess = 16;
@@ -12,14 +12,15 @@ void ParticleSystem::init()
 	for (i = 0; i < ptlCount; i++)
 	{
 		int cidx = rand() % 3;
-		Particle tmp = {
-			VECTOR3D(0, 0, 0),	//Position
-			VECTOR3D(((rand() % 200) - 50.0f) / 100.0f, ((rand() % 200)) / 100.0f, ((rand() % 200 - 50.0f)) / 100.0f),	//velocity
-			VECTOR3D(0, 0, 0),	//Acceleration
-			pemit[cidx][0], pemit[cidx][1], pemit[cidx][2],	//Emitted Color
-			0.0f,	//age
-			3.0f + 0.1*(rand() % 10),	//Life
-			0.1f,	//Size
+		Particle tmp = 
+		{
+			VECTOR3D(0, 0, 0),
+			VECTOR3D(((rand() % 200) - 50.0f) / 100.0f, ((rand() % 200)) / 100.0f, ((rand() % 200 - 50.0f)) / 100.0f),
+			VECTOR3D(0, 0, 0),
+			pemit[cidx][0], pemit[cidx][1], pemit[cidx][2],
+			0.0f,
+			3.0f + 0.1*(rand() % 10),
+			0.1f,
 			false,
 		};
 		particles.push_back(tmp);
@@ -27,7 +28,7 @@ void ParticleSystem::init()
 	sphere = gluNewQuadric();
 }
 
-//Simulate the state of all particles
+// Simulate the state of all particles
 void ParticleSystem::simulate(float dt)
 {
 	aging(dt);
@@ -36,13 +37,13 @@ void ParticleSystem::simulate(float dt)
 }
 
 
-//a loop to counting the age of the particles
+// A loop to counting the age of the particles
 void ParticleSystem::aging(float dt)
 {
 	for (int i = 0; i < particles.size(); i++)
 	{
 		particles[i].age += dt;
-		//Age out then die
+		// Age out then die
 		if (particles[i].age > particles[i].life)
 			particles[i].died = true;
 	}
@@ -58,11 +59,11 @@ void ParticleSystem::aging(float dt)
 			particles[i].died = false;
 			particles[i].age = 0;
 			particles[i].position = VECTOR3D(0, 0, 0);
-			particles[i].veclocity = VECTOR3D(((rand() % 20) - 5.0f) / 10.0f, ((rand() % 20)) / 10.0f, ((rand() % 20 - 5.0f)) / 10.0f); 	//velocity
+			particles[i].veclocity = VECTOR3D(((rand() % 20) - 5.0f) / 10.0f, ((rand() % 20)) / 10.0f, ((rand() % 20 - 5.0f)) / 10.0f);
 		}
 }
 
-//applying gravity system to the scene
+// Applying gravity system to the scene
 void ParticleSystem::applyGravity()
 {
 	for (int i = 0; i < particles.size(); i++)
@@ -83,7 +84,7 @@ void ParticleSystem::kinematics(float dt)
 	}
 }
 
-//the render function
+// The render function
 void ParticleSystem::render()
 {
 	for (int i = 0; i < particles.size(); i++)
@@ -99,6 +100,6 @@ void ParticleSystem::render()
 		}
 	}
 
-	//Reset Color for world
+	// Reset Color for world
 	glColor4f(1, 1, 1, 1);
 }

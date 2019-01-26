@@ -1,34 +1,18 @@
-//
-//  cylin.h
-//  GLUT_test
-//
-//  Created by weaveinwind on 2018/12/31.
-//  Copyright © 2018 weaveinwind. All rights reserved.
-//
+#pragma once
 
-#ifndef cylin_h
-#define cylin_h
+#include "model.h"
 
-#include "build.h"
+namespace build
+{
+	class Cylin : public Model
+	{
+	private:
+		GLfloat m_R;
+		GLfloat m_Height;
+	public:
+		Cylin(GLfloat r, GLfloat h, VECTOR3D center = VECTOR3D(0, 0, 0), VECTOR4D color = VECTOR4D(1, 1, 1, 1));
+		~Cylin();
 
-namespace wiw { namespace build {
-    class Cylin{
-    private:
-        VECTOR3D m_Center;
-        GLfloat m_Height;
-        GLfloat m_R;
-        VECTOR4D m_Color;
-    public:
-        Cylin(VECTOR3D center, GLfloat h, GLfloat r, VECTOR4D color = VECTOR4D(1, 1, 1, 1));
-        ~Cylin();
-        
-        void draw() const;
-        void onTexture(GLuint texture);
-        void offTexture();
-        void translate(VECTOR3D trans);
-        void scale(VECTOR3D scale);
-        void rotate(VECTOR4D rotate);
-    };
-}}
-
-#endif /* cylin_h */
+		void draw() const override;
+	};
+}

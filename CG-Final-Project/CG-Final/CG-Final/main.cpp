@@ -4,9 +4,13 @@
 #include "GL/glut.h"
 #include "Math/Maths.h"
 #include "main.h"
-#include "Object/obj.h"
+#include "Build/ball.h"
+#include "Build/cube.h"
+#include "Build/cylin.h"
+#include "Build/pyram.h"
+#include "Others/material.h"
+#include "Others/texture.h"
 #include "Others/obj3dmodel.h"
-#include "Build/build.h"
 #include "Others/ParticleSystem.h"
 #include "Others/PhysicsEngine.h"
 
@@ -37,7 +41,7 @@ GLuint sBack;
 GLuint shadowMapTexture;
 
 // .obj Model
-wiw::Obj3dmodel desk("CG-Final\\Image\\computerdesk.obj");
+Obj3dmodel desk("CG-Final\\Image\\computerdesk.obj");
 
 GLUnurbsObj *nurbs;
 
@@ -63,15 +67,14 @@ int count2 = 0;
 int count3 = 0;
 int count4 = 0;
 GLfloat lightPower = 1.0f;
-
-//window size
 int windowWidth, windowHeight;
 
-//Matrices
+// Matrices
 MATRIX4X4 lightProjectionMatrix, lightViewMatrix;
 MATRIX4X4 cameraProjectionMatrix, cameraViewMatrix;
 
-void InitSingleBoxCollider(VECTOR3D pos, VECTOR3D scalar) {
+void InitSingleBoxCollider(VECTOR3D pos, VECTOR3D scalar) 
+{
 	boxPosition.push_back(pos);
 	boxScale.push_back(scalar);
 	boxNum++;
@@ -96,22 +99,26 @@ void InitBoxCollidersProperty() {
 	InitSingleBoxCollider(VECTOR3D(-20.3f, 4, 0), VECTOR3D(0.6f, 8, 20));
 }
 
-void SetBoxColliderBoundary() {
-	for (int i = 0; i < boxNum; ++i) {
-		physicsEngine->setSceneInnerBoundary(
+void SetBoxColliderBoundary() 
+{
+	for (int i = 0; i < boxNum; ++i) 
+	{
+		physicsEngine->setSceneInnerBoundary
+		(
 			boxPosition[i].x - boxScale[i].x / 2.f,
 			boxPosition[i].y - boxScale[i].y / 2.f,
 			boxPosition[i].z - boxScale[i].z / 2.f,
 			boxPosition[i].x + boxScale[i].x / 2.f,
 			boxPosition[i].y + boxScale[i].y / 2.f,
-			boxPosition[i].z + boxScale[i].z / 2.f);
+			boxPosition[i].z + boxScale[i].z / 2.f
+		);
 	}
 }
 
-//Called for initiation
+// Called for initiation
 bool Init(void)
 {
-	//Check for necessary extensions
+	// Check for necessary extensions
 	if (!GLEE_ARB_depth_texture || !GLEE_ARB_shadow)
 	{
 		printf("I require ARB_depth_texture and ARB_shadow extensionsn\n");
@@ -122,27 +129,27 @@ bool Init(void)
 
 	particleSystem.init();
 
-	//Load identity modelview
+	// Load identity modelview
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//Shading states
+	// Shading states
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	//Depth states
+	// Depth states
 	glClearDepth(1.0f);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_CULL_FACE);
 
-	//We use glScale when drawing the scene
+	// We use glScale when drawing the scene
 	glEnable(GL_NORMALIZE);
 
-	//Create the shadow map texture
+	// Create the shadow map texture
 	glGenTextures(1, &shadowMapTexture);
 	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapSize, shadowMapSize, 0,
@@ -152,15 +159,15 @@ bool Init(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-	//Use the color as the ambient and diffuse material
+	// Use the color as the ambient and diffuse material
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 
-	//White specular material color, shininess 16
+	// White specular material color, shininess 16
 	glMaterialfv(GL_FRONT, GL_SPECULAR, white);
 	glMaterialf(GL_FRONT, GL_SHININESS, 16.0f);
 
-	//Calculate & save matrices
+	// Calculate & save matrices
 	glPushMatrix();
 
 	glLoadIdentity();
@@ -185,7 +192,7 @@ bool Init(void)
 
 	glPopMatrix();
 
-	wiw::build::Texture tex = wiw::build::Texture();
+	build::Texture tex = build::Texture();
 	tex.load("CG-Final\\Image\\floor16.bmp", &ground, 512, 512);
 	tex.setWrapS(GL_REPEAT);
 	tex.setWrapT(GL_REPEAT);
@@ -242,7 +249,8 @@ bool Init(void)
 	return true;
 }
 
-void DrawRect(GLuint texture) {
+void DrawRect(GLuint texture) 
+{
 	glDisable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -254,7 +262,8 @@ void DrawRect(GLuint texture) {
 	const GLfloat point[4][2] = { { x1,y1 },{ x1,y2 },{ x2,y2 },{ x2,y1 } };
 	int dir[4][2] = { { 1,0 },{ 1,1 },{ 0,1 },{ 0,0 } };
 	glBegin(GL_QUADS);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) 
+	{
 		glTexCoord2iv(dir[i]);
 		glVertex2fv(point[i]);
 	}
@@ -329,14 +338,14 @@ void DrawSkybox()
 	glEnable(GL_TEXTURE_2D);
 }
 
-//Called to draw scene
+// Called to draw scene
 void Display()
 {
 	glActiveTexture(GL_TEXTURE1);
 
 	glEnable(GL_CULL_FACE);
 
-	//First pass - from light's point of view
+	// First pass - from light's point of view
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
@@ -345,31 +354,31 @@ void Display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(lightViewMatrix);
 
-	//Use viewport the same size as the shadow map
+	// Use viewport the same size as the shadow map
 	glViewport(0, 0, shadowMapSize, shadowMapSize);
 
-	//Draw back faces into the shadow map
+	// Draw back faces into the shadow map
 	glCullFace(GL_FRONT);
 
-	//Disable color writes, and use flat shading for speed
+	// Disable color writes, and use flat shading for speed
 	glShadeModel(GL_FLAT);
 	glColorMask(0.05, 0.05, 0.05, 0);
 
-	//Draw the scene
+	// Draw the scene
 	DrawScene();
 
-	//Read the depth buffer into the shadow map texture
+	// Read the depth buffer into the shadow map texture
 	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 	glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, shadowMapSize, shadowMapSize);
 
-	//restore states
+	// Restore states
 	glCullFace(GL_BACK);
 	glShadeModel(GL_SMOOTH);
 	glColorMask(1, 1, 1, 1);
 
 	glDisable(GL_CULL_FACE);
 
-	//2nd pass - Draw from camera's point of view
+	// 2nd pass - Draw from camera's point of view
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
@@ -380,7 +389,7 @@ void Display()
 
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	//Use dim light to represent shadowed areas
+	// Use dim light to represent shadowed areas
 	glLightfv(GL_LIGHT1, GL_POSITION, VECTOR4D(lightPosition));
 	glLightfv(GL_LIGHT1, GL_AMBIENT, white*0.2f*lightPower);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, white*0.2f*lightPower);
@@ -393,21 +402,21 @@ void Display()
 
 	DrawScene();
 
-	//3rd pass
-	//Draw with bright light
+	// 3rd pass
+	// Draw with bright light
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, white*lightPower);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, white*lightPower);
 
-	//Calculate texture matrix for projection
-	//This matrix takes us from eye space to the light's clip space
-	//It is postmultiplied by the inverse of the current view matrix when specifying texgen
+	// Calculate texture matrix for projection
+	// This matrix takes us from eye space to the light's clip space
+	// It is postmultiplied by the inverse of the current view matrix when specifying texgen
 	static MATRIX4X4 biasMatrix(0.5f, 0.0f, 0.0f, 0.0f,
 		0.0f, 0.5f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.5f, 0.0f,
-		0.5f, 0.5f, 0.5f, 1.0f);	//bias from [-1, 1] to [0, 1]
+		0.5f, 0.5f, 0.5f, 1.0f);
 	MATRIX4X4 textureMatrix = biasMatrix * lightProjectionMatrix*lightViewMatrix;
 
-	//Set up texture coordinate generation.
+	// Set up texture coordinate generation.
 	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
 	glTexGenfv(GL_S, GL_EYE_PLANE, textureMatrix.GetRow(0));
 	glEnable(GL_TEXTURE_GEN_S);
@@ -424,20 +433,20 @@ void Display()
 	glTexGenfv(GL_Q, GL_EYE_PLANE, textureMatrix.GetRow(3));
 	glEnable(GL_TEXTURE_GEN_Q);
 
-	//Bind & enable shadow map texture
+	// Bind & enable shadow map texture
 	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 	glEnable(GL_TEXTURE_2D);
 
-	//Enable shadow comparison
+	// Enable shadow comparison
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
 
-	//Shadow comparison should be true (ie not in shadow) if r<=texture
+	// Shadow comparison should be true (ie not in shadow) if r<=texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
 
-	//Shadow comparison should generate an INTENSITY result
+	// Shadow comparison should generate an INTENSITY result
 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
 
-	//Set alpha test to discard false comparisons
+	// Set alpha test to discard false comparisons
 	glAlphaFunc(GL_GEQUAL, 0.99f);
 	glEnable(GL_ALPHA_TEST);
 
@@ -463,7 +472,7 @@ void Display()
 		gluEndSurface(nurbs);
 	}
 
-	//Disable textures and texgen
+	// Disable textures and texgen
 	glDisable(GL_TEXTURE_2D);
 
 	glDisable(GL_TEXTURE_GEN_S);
@@ -471,11 +480,11 @@ void Display()
 	glDisable(GL_TEXTURE_GEN_R);
 	glDisable(GL_TEXTURE_GEN_Q);
 
-	//Restore other states
+	// Restore other states
 	glDisable(GL_LIGHTING);
 	glDisable(GL_ALPHA_TEST);
 
-	//Set matrices for ortho
+	// Set matrices for ortho
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
@@ -485,7 +494,7 @@ void Display()
 	glPushMatrix();
 	glLoadIdentity();
 
-	//reset matrices
+	// Reset matrices
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -504,13 +513,13 @@ void Display()
 	}
 }
 
-//Called on window resize
+// Called on window resize
 void Reshape(int w, int h)
 {
-	//Save new window size
+	// Save new window size
 	windowWidth = w, windowHeight = h;
 
-	//Update the camera's projection matrix
+	// Update the camera's projection matrix
 	glPushMatrix();
 	glLoadIdentity();
 	gluPerspective(45.0f, (float)windowWidth / windowHeight, 0.1f, 1000.0f);
@@ -520,49 +529,49 @@ void Reshape(int w, int h)
 
 void Grab()
 {
-	FILE*    pDummyFile;																	//指向另一bmp文件，用于复制它的文件头和信息头数据
-	FILE*    pWritingFile;																	//指向要保存截图的bmp文件
-	GLubyte* pPixelData;																	//指向新的空的内存，用于保存截图bmp文件数据
+	FILE*    pDummyFile;																	// 指向另一bmp文件，用于复制它的文件头和信息头数据
+	FILE*    pWritingFile;																	// 指向要保存截图的bmp文件
+	GLubyte* pPixelData;																	// 指向新的空的内存，用于保存截图bmp文件数据
 	GLubyte  BMP_Header[BMP_Header_Length];
 	GLint    i, j;
-	GLint    PixelDataLength;																//BMP文件数据总长度
+	GLint    PixelDataLength;																// BMP文件数据总长度
 
 	// 计算像素数据的实际长度
 	i = 800 * 3;																			// 得到每一行的像素数据长度
 	while (i % 4 != 0)																		// 补充数据，直到i是的倍数
 		++i;
-	PixelDataLength = i * 800;																//补齐后的总位数
+	PixelDataLength = i * 800;																// 补齐后的总位数
 
 	// 分配内存和打开文件
 	pPixelData = (GLubyte*)malloc(PixelDataLength);
 	if (pPixelData == 0)
 		exit(0);
 
-	pDummyFile = fopen("CG-Final\\Image\\door.bmp", "rb");									//只读形式打开
+	pDummyFile = fopen("CG-Final\\Image\\door.bmp", "rb");									// 只读形式打开
 	if (pDummyFile == 0)
 		exit(0);
 
-	pWritingFile = fopen("CG-Final\\Image\\grab.bmp", "wb");								//只写形式打开
+	pWritingFile = fopen("CG-Final\\Image\\grab.bmp", "wb");								// 只写形式打开
 	if (pWritingFile == 0)
 		exit(0);
 
-	//把读入的bmp文件的文件头和信息头数据复制，并修改宽高数据
-	fread(BMP_Header, sizeof(BMP_Header), 1, pDummyFile);									//读取文件头和信息头，占据54字节
+	// 把读入的bmp文件的文件头和信息头数据复制，并修改宽高数据
+	fread(BMP_Header, sizeof(BMP_Header), 1, pDummyFile);									// 读取文件头和信息头，占据54字节
 	fwrite(BMP_Header, sizeof(BMP_Header), 1, pWritingFile);
-	fseek(pWritingFile, 0x0012, SEEK_SET);													//移动到0X0012处，指向图像宽度所在内存
+	fseek(pWritingFile, 0x0012, SEEK_SET);													// 移动到0X0012处，指向图像宽度所在内存
 	i = 800;
 	j = 800;
 	fwrite(&i, sizeof(i), 1, pWritingFile);
 	fwrite(&j, sizeof(j), 1, pWritingFile);
 
 	// 读取当前画板上图像的像素数据
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);													//设置4位对齐方式
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);													// 设置4位对齐方式
 	glReadPixels(0, 0, 800, 800,
 		GL_BGR_EXT, GL_UNSIGNED_BYTE, pPixelData);
 
 	// 写入像素数据
 	fseek(pWritingFile, 0, SEEK_END);
-	//把完整的BMP文件数据写入pWritingFile
+	// 把完整的BMP文件数据写入pWritingFile
 	fwrite(pPixelData, PixelDataLength, 1, pWritingFile);
 
 	// 释放内存和关闭文件
@@ -628,7 +637,6 @@ void Mouse(int button, int state, int x, int y)
 		else if (state == GLUT_UP)
 			mouseLeftDown = false;
 
-	// TODO: Zoom In/Out
 	if (state == GLUT_UP && button == GLUT_WHEEL_UP)
 		cameraScale *= 1.02f;
 	if (state == GLUT_UP && button == GLUT_WHEEL_DOWN)
@@ -663,15 +671,16 @@ void UpdateCameraHoriMovement()
 	if (dPressed)
 		dx += 0.01f;
 
-	if (dz != 0 || dx != 0) {
-		//行走不改变y轴坐标
+	if (dz != 0 || dx != 0) 
+	{
+		// 行走不改变y轴坐标
 		VECTOR3D forward = VECTOR3D(cameraViewMatrix.GetEntry(2), 0.0f, cameraViewMatrix.GetEntry(10));
 		VECTOR3D strafe = VECTOR3D(cameraViewMatrix.GetEntry(0), 0.0f, cameraViewMatrix.GetEntry(8));
 
 		cameraPosition += (-dz * forward + dx * strafe) * MoveSpeed;
 		cameraTarget = cameraPosition + (-dz * forward + dx * strafe) * 1.5f;
 
-		//每次做完坐标变换后，先进行碰撞检测来调整坐标
+		// 每次做完坐标变换后，先进行碰撞检测来调整坐标
 		physicsEngine->outCollisionTest(cameraPosition, cameraTarget);
 		physicsEngine->inCollisionTest(cameraPosition, cameraTarget);
 	}
@@ -680,7 +689,7 @@ void UpdateCameraHoriMovement()
 void UpdateView()
 {
 	{
-		//Calculate & save matrices
+		// Calculate & save matrices
 		glPushMatrix();
 
 		glLoadIdentity();
@@ -713,24 +722,14 @@ void DrawScene()
 	glActiveTexture(GL_TEXTURE0);
 
 	// Set Material
-	wiw::build::Material material = wiw::build::Material();
+	build::Material material = build::Material();
 	material.setDiffuse(VECTOR4D(1, 1, 1, 1));
 	material.setSpecular(VECTOR4D(1, 1, 1, 1));
 	material.setShininess(32);
 
 	// Ground
 	{
-		wiw::build::Cube gd(VECTOR3D(0, -0.1f, 0), 60.0f, 0.2f, 60.0f); gd.draw();
-	}
-
-	// Door
-	{
-		wiw::obj::Door dr = wiw::obj::Door();   //door
-		if (cameraPosition.y >= 7 && cameraPosition.x >= -11.5f && cameraPosition.x <= -10.5f)
-			dr.open();
-		else
-			dr.close();
-		dr.draw(VECTOR3D(-11, 7, 10.3), door, wall);
+		build::Cube gd(60.0f, 0.2f, 60.0f, VECTOR3D(0, -0.1f, 0)); gd.draw();
 	}
 
 	// Desks
@@ -744,7 +743,7 @@ void DrawScene()
 	// Light Note : LightBall
 	{
 		glDisable(GL_LIGHTING);
-		wiw::build::Ball lightBall(VECTOR3D(0, 0, 0), 0.3f);
+		build::Ball lightBall(0.3f);
 		lightBall.translate(VECTOR3D(lightPosition.x, lightPosition.y, lightPosition.z));
 		lightBall.scale(VECTOR3D(1, 1, 1));
 		lightBall.draw();
@@ -757,7 +756,7 @@ void DrawScene()
 
 	// Ball
 	{
-		wiw::build::Ball ball(VECTOR3D(0, 0, 0), 0.3f);
+		build::Ball ball(0.3f);
 		ball.translate(VECTOR3D(0, (count1 % 400) / 400.0f + 0.3f, 0));
 		ball.scale(VECTOR3D((count1 % 400) / 400.0f + 1, (count1 % 400) / 400.0f + 1, (count1 % 400) / 400.0f + 1));
 		if (selectId == 1)
@@ -782,7 +781,7 @@ void DrawScene()
 
 	// Cube
 	{
-		wiw::build::Cube cube(VECTOR3D(0, 0, 0), 0.6f, 0.6f, 0.6f);
+		build::Cube cube(0.6f, 0.6f, 0.6f);
 		cube.translate(VECTOR3D(0.0f, (count2 % 400) / 400.0f + 0.3f, -4.0f));
 		if (selectId == 2)
 		{
@@ -806,7 +805,7 @@ void DrawScene()
 
 	// Cylin
 	{
-		wiw::build::Cylin cylin(VECTOR3D(0, 0, 0), 0.6f, 0.3f);
+		build::Cylin cylin(0.3f, 0.6f);
 		cylin.translate(VECTOR3D(0.0f, 2.0f, -(count3 % 400) / 400.0f - 0.6f));
 		cylin.rotate(VECTOR4D(90, 1, 0, 0));
 		if (selectId == 3)
@@ -831,7 +830,7 @@ void DrawScene()
 
 	// Pyram
 	{
-		wiw::build::Pyram pyram(VECTOR3D(0, 0, 0), 0.6f, 0.3f);
+		build::Pyram pyram(0.3f, 0.6f);
 		pyram.translate(VECTOR3D(0.0f, 2.0f, (count4 % 400) / 400.0f));
 		pyram.rotate(VECTOR4D(270, 1, 0, 0));
 		if (selectId == 4)
@@ -862,7 +861,7 @@ void DrawScene()
 	// Box Colliders
 	for (int i = 0; i < boxNum; ++i)
 	{
-		wiw::build::Cube box(VECTOR3D(boxPosition[i].x, boxPosition[i].y, boxPosition[i].z), boxScale[i].x, boxScale[i].y, boxScale[i].z);
+		build::Cube box(boxScale[i].x, boxScale[i].y, boxScale[i].z, VECTOR3D(boxPosition[i].x, boxPosition[i].y, boxPosition[i].z));
 		box.onTexture(ground);
 		box.draw();
 		box.offTexture();
@@ -889,7 +888,7 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(Keyboard);
 	glutKeyboardUpFunc(KeyUp);
 	glutIdleFunc(Idle);
-
 	glutMainLoop();
+	delete physicsEngine;
 	return 0;
 }

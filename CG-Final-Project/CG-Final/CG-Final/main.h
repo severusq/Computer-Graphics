@@ -6,22 +6,22 @@ void InitBoxCollidersProperty();
 
 void SetBoxColliderBoundary();
 
-//Called for initiation
+// Called for initiation
 bool Init(void);
 
 void DrawRect(GLuint texture);
 
 void DrawSkybox();
 
-//Called to draw scene
+// Called to draw scene
 void Display();
 
-//Called on window resize
+// Called on window resize
 void Reshape(int w, int h);
 
 void Grab();
 
-//Called when a key is pressed
+// Called when a key is pressed
 void Keyboard(unsigned char key, int x, int y);
 
 void KeyUp(unsigned char key, int x, int y);

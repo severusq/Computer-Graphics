@@ -67,7 +67,7 @@ void PhysicsEngine::jumpAndUpdateVelocity()
 	accelerUp.y = 0.f;
 }
 
-//判断在xz平面，相机位置是否位于碰撞体内部
+// 判断在xz平面，相机位置是否位于碰撞体内部
 bool insideTheCollider(VECTOR3D _cameraPos, VECTOR3D _innerMin, VECTOR3D _innerMax)
 {
 	float camX = _cameraPos.x;
@@ -96,16 +96,15 @@ void PhysicsEngine::updateCameraVertMovement(VECTOR3D & cameraPos, VECTOR3D & ta
 	targetPos.y += velocity.y * JumpFactor;
 	targetPos.z += velocity.z * JumpFactor;
 
-	//检测所有碰撞体
+	// 检测所有碰撞体
 	for (int i = 0; i < innerBoundaryMin.size(); i++)
 	{
-		//如果在XZ平面进入碰撞体所在区域
+		// 如果在XZ平面进入碰撞体所在区域
 		if (insideTheCollider(cameraPos, innerBoundaryMin[i], innerBoundaryMax[i]))
 		{
 			if (cameraPos.y - HeroHeight <= innerBoundaryMax[i].y&& cameraPos.y >= innerBoundaryMax[i].y)
 			{
-				//脚接触到碰撞体顶部
-				//cout << "touch the top of collider" << endl;
+				// 脚接触到碰撞体顶部
 				isJumping = false;
 				accelerUp.y = -GravityAcceler;
 				velocity.y = 0.f;
@@ -115,8 +114,7 @@ void PhysicsEngine::updateCameraVertMovement(VECTOR3D & cameraPos, VECTOR3D & ta
 
 			if (cameraPos.y >= innerBoundaryMin[i].y &&cameraPos.y - HeroHeight <= innerBoundaryMin[i].y)
 			{
-				//头接触到碰撞体底部
-				//cout << "touch the bottom of collider" << endl;
+				// 头接触到碰撞体底部
 				velocity.y = 0.f;
 				cameraPos.y = innerBoundaryMin[i].y;
 				break;
@@ -129,7 +127,7 @@ void PhysicsEngine::updateCameraVertMovement(VECTOR3D & cameraPos, VECTOR3D & ta
 
 void PhysicsEngine::inCollisionTest(VECTOR3D & cameraPos, VECTOR3D & targetPos)
 {
-	//后面可以在这里添加：预处理，排除当前肯定不会产生碰撞的物体
+	// 后面可以在这里添加：预处理，排除当前肯定不会产生碰撞的物体
 	for (int i = 0; i < innerBoundaryMin.size(); i++)
 		inCollisionTestWithHeight(innerBoundaryMin[i].x, innerBoundaryMin[i].y, innerBoundaryMin[i].z,
 			innerBoundaryMax[i].x, innerBoundaryMax[i].y, innerBoundaryMax[i].z, cameraPos, targetPos);
@@ -137,7 +135,7 @@ void PhysicsEngine::inCollisionTest(VECTOR3D & cameraPos, VECTOR3D & targetPos)
 
 void PhysicsEngine::inCollisionTestWithHeight(float x1, float y1, float z1, float x2, float y2, float z2, VECTOR3D & cameraPos, VECTOR3D & targetPos)
 {
-	//当身体处于碰撞体垂直区域范围内，才进行XZ平面的碰撞检测
+	// 当身体处于碰撞体垂直区域范围内，才进行XZ平面的碰撞检测
 	if (cameraPos.y - HeroHeight > y1 && cameraPos.y - HeroHeight < y2)
 		inCollisionTestXZ(x1, z1, x2, z2, cameraPos, targetPos);
 }
@@ -154,7 +152,7 @@ bool OnSegment(dot pi, dot pj, dot pk)
 	else return false;
 }
 
-//检测线段相交快速算法
+// 检测线段相交快速算法
 bool SegmentIntersect(dot p1, dot p2, dot p3, dot p4)
 {
 	int d1, d2, d3, d4;

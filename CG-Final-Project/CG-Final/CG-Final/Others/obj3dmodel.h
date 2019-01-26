@@ -8,17 +8,12 @@
 #include "GL/glut.h"
 #include "../Math/Maths.h"
 
-using namespace std;
-
-namespace wiw
+class Obj3dmodel
 {
-	class Obj3dmodel
-	{
-	private:
-		vector<vector<GLfloat>>vSets;
-		vector<vector<GLint>>fSets;
-	public:
-		Obj3dmodel(string filename);
-		void Draw(VECTOR3D position, VECTOR4D rotation, VECTOR3D scale, GLuint texture);
-	};
-}
+private:
+	std::vector <std::vector<GLfloat >> vSets;
+	std::vector<std::vector<GLint>>fSets;
+public:
+	Obj3dmodel(std::string filename);
+	void Draw(VECTOR3D position, VECTOR4D rotation, VECTOR3D scale, GLuint texture);
+};

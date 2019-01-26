@@ -1,33 +1,17 @@
-//
-//  ball.h
-//  GLUT_test
-//
-//  Created by weaveinwind on 2018/12/31.
-//  Copyright © 2018 weaveinwind. All rights reserved.
-//
+#pragma once
 
-#ifndef ball_h
-#define ball_h
+#include "model.h"
 
-#include "build.h"
+namespace build
+{
+	class Ball : public Model
+	{
+	private:
+		GLfloat m_R;
+	public:
+		Ball(GLfloat r, VECTOR3D center = VECTOR3D(0, 0, 0), VECTOR4D color = VECTOR4D(1, 1, 1, 1));
+		~Ball();
 
-namespace wiw { namespace build {
-    class Ball{
-    private:
-        VECTOR3D m_Center;
-        GLfloat m_R;
-        VECTOR4D m_Color;
-    public:
-        Ball(VECTOR3D center, GLfloat r, VECTOR4D color = VECTOR4D(1, 1, 1, 1));
-        ~Ball();
-        
-        void draw() const;
-        void onTexture(GLuint texture);
-        void offTexture();
-        void translate(VECTOR3D trans);
-        void scale(VECTOR3D scale);
-        void rotate(VECTOR4D rotate);
-    };
-}}
-
-#endif /* ball_h */
+		void draw() const override;
+	};
+}
