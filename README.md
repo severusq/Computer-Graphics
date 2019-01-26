@@ -11,4 +11,4 @@ The "CG-Final-Project" folder includes our final project of a scene with:
 6. Real-time shadow
 7. NURBS modeling
 
-![Image text](https://raw.github.com/wpn-zju/repository/master/Computer-Graphics/CG-Final-Project/CG-Final/CG-Final/Image/Sample.png)
+![Image text](https://github.com/wpn-zju/Computer-Graphics/blob/master/CG-Final-Project/CG-Final/CG-Final/Image/Sample.png)
